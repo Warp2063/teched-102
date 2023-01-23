@@ -1,1 +1,2 @@
-# Class 03 - Reading Notes
+# Class 03 Notes
+
