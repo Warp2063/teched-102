@@ -13,7 +13,7 @@
 
         git clone <URL>
 
-    and press Enter.  The repository will be cloned locally.
+    and press Enter.  A new directory will be created with the same name as the repository, and it will create a local copy.
 
 <br>
 
