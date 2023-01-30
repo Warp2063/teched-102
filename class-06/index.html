@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+  <h1 id="hello1">Hello World!</h1>
+
+  <h1 id="hello2">Hello World!</h1>
+
+  <h1 id="hello3" onclick="secretBackgroundReset()" style="color:turquoise">Hello World!</h1>
+
+  <h1 id="hello4">Hello World!</h1>
+
+  <button onclick="clicked()">Click me!</button>
+
+  <button id="button2" onclick="clicked2()">I'm an ordinary button</button>
+
+  <button id="counter" onclick="counterClicked()">Times clicked: 0</button>
+
+  <button id="angryButton" onclick="angryClicked()">Don't press this button.</button>
+
+  <button onclick="nameButtonClicked()">Name Shenanigans</button>
+
+  <br>
+  <br>
+
+  <button onclick="numberGame()">I want to play a game!</button>
+
+
+
+
+  <script>
+    // js logic goes here
+    /*
+    Block comment!
+    Multiple lines of comments!
+    */
+    var timesClicked = 0;
+    var angryCounter = 0;
+    var which = false;
+
+    console.log('checkpoint 1');
+    console.time(); // timer start point
+    var a = 1, b = 2, c;
+
+    c = a + b;
+
+    console.timeEnd(); // timer end point, print the difference in the console log
+    console.log('checkpoint 2');
+
+    //alert('This page is loaded.');
+
+    var floatingPointNum = 3.1415926;
+    console.log(floatingPointNum + "is a finite float? " + Number.isFinite(floatingPointNum));
+    console.log(floatingPointNum + "is an integer? " + Number.isInteger(floatingPointNum));
+
+    function clicked() {
+      document.getElementById('hello1').innerHTML = "Hello Everyone!";
+      document.getElementById('hello2').innerHTML = "Hello Everyone Again!";
+      document.getElementById('hello3').style.color = "red";
+    }
+
+    function clicked2() {
+      if (which == false) {
+        document.getElementById('button2').innerHTML = "Changed on you, didn't I?";
+      }
+      else {
+        document.getElementById('button2').innerHTML = "I'm an ordinary button";
+      }
+
+      // invert variable 'which'
+      which = !which;
+
+      document.getElementById('button2').style.color = "green";
+
+    }
+
+    function counterClicked() {
+      //timesClicked++;
+      document.getElementById('counter').innerHTML = ("Times clicked: " + ++timesClicked);
+    }
+
+
+    function angryClicked() {
+      switch (angryCounter) {
+        case 0:
+          document.getElementById('angryButton').innerHTML = "Hey! Stop that!";
+          break;
+        case 1:
+          document.getElementById('angryButton').innerHTML = "I'm warning you!";
+          break;
+        case 2:
+          document.getElementById('angryButton').innerHTML = "I told you to stop.";
+          break;
+        case 3:
+          document.getElementById('angryButton').innerHTML = "I mean it.";
+          break;
+        case 4:
+          document.getElementById('angryButton').innerHTML = "Final warning.";
+          break;
+        case 5:
+          document.getElementById('angryButton').innerHTML = "You didn't listen.";
+          document.body.style.background = 'red';
+          break;
+        default:
+          document.getElementById('angryButton').innerHTML = "No point whining about it now.";
+
+          if (document.body.style.background == "white") {
+            document.getElementById('angryButton').innerHTML = "Oh. You cheated.";
+          }
+
+          break;
+      }
+
+      angryCounter++;
+    }
+
+    function nameButtonClicked() {
+      console.time();
+      var firstName = prompt('Please enter your first name:');
+      var lastName = prompt('Please enter your last name:');
+      // console.log(firstName + " " + lastName + " is cool.");
+      alert(firstName + " " + lastName + " is cool.");
+      console.timeEnd();
+    }
+
+    function secretBackgroundReset() {
+      document.body.style.background = "white";
+      angryClicked();
+    }
+
+    function numberGame() {
+      var secretNum = Math.floor(Math.random() * 100);
+      var maxGuesses = 10;
+      var numGuesses = maxGuesses;
+      var min = 0;
+      var max = 99;
+      var userGuess;
+
+
+
+      while (numGuesses > 0) {
+        userGuess = prompt("I'm thinking of an integer between " + min + " and " + max + " inclusive. " + numGuesses + " guesses remaining.  What is your guess?");
+
+        // If user has hit cancel, terminate the loop.
+        if (userGuess == null) {
+          break;
+        }
+        
+        userGuess = parseInt(userGuess); // Note: if a floating point number is entered, it retains only the integer portion and does not regard it as an illegal input
+        // Also not currently handling unsafe integers (too large/too small for JS)
+        if (Number.isInteger(userGuess) == false) {
+          alert("That's not an integer, mate!  Try again!");
+          continue;
+        }
+        else if(userGuess < secretNum) {
+          alert("Sorry, too low!");
+          numGuesses--;
+          min = userGuess;
+        }
+        else if(userGuess > secretNum) {
+          alert("Sorry, too high!");
+          numGuesses--;
+          max = userGuess;
+        }
+        else {
+          numGuesses--;
+          break;
+        }
+      }
+
+      if (numGuesses > 0 && userGuess == secretNum) {
+        alert("Good job, mate! You guessed the secret number, " + secretNum + "! You had " + numGuesses + " guesses out of " + maxGuesses + " remaining.");
+      }
+      else {
+        alert("Too bad, mate. You ran out of guesses. The secret number was " + secretNum + ".");
+      }
+
+
+    }
+  </script>
+
+
+</body>
+
+</html>
