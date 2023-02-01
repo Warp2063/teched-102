@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <script>
+
+
+    function buttonPressed() {
+      console.log("Button Pressed");
+
+      var firstName = prompt('Please enter your first name.');
+
+      if (firstName == null) {
+        return;
+      }
+
+      var age = parseInt(prompt('How old are you?'));
+
+      var location = prompt('Where do you live?');
+
+      var outputText = "Hello, " + firstName + "! Nice to meet you!  ";
+
+      if (age < 0) {
+        outputText += ("I guess you don't have to tell me your real age if you don't want to.");
+      }
+      else if (age < 3) {
+        outputText += "Only " + age + " years old?!  I'm really impressed!";
+      }
+      else if (age < 10) {
+        outputText += "Nice that you're getting into coding at the young age of " + age + ".";
+      }
+      else if (age < 20) {
+        outputText += age + " isn't a bad age to get started with coding!";
+      }
+      else if (age < 65) {
+        outputText += "Starting coding at " + age + "?  Fine time to learn!";
+      }
+      else if (Number.isInteger(age)) {
+        outputText += age + " isn't too late to start coding!  I'm really impressed!";
+      }
+      else {
+        outputText += "I guess I didn't understand your age.";
+      }
+
+      if (location == null || location == '') {
+        outputText += "  I'd be uncomfortable with sharing my location online, too.";
+      }
+      else {
+        outputText += "  I hear it's really nice in " + location + ".";
+      }
+
+      document.getElementById('output').innerHTML = outputText;
+
+    }
+
+  </script>
+</head>
+
+
+<body>
+  <button onclick="buttonPressed()">Press Me!</button>
+  <br>
+  <h2 id="output"></h2>
+
+
+  
+</body>
+
+</html>
