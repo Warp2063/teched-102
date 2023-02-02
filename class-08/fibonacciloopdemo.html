@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  Loop example using the Fibonacci sequence: (1, 1, 2, 3, 5, 8, 13...)
+
+
+  <script>
+    let a = 1, b = 1;
+
+    let number = 30; // This number is the # in the sequence that we want to discover.
+
+    // loop starts at i = 3
+    // because we already know that the first and second Fib. numbers are 1 and 1
+    for (var i = 3; i <= number; i++) {
+      let temp = a + b; // add the last two numbers from the sequence together
+      console.log("Fibonacci #" + i + " is " + temp); // display the output for this loop
+      a = b; // move b into a
+      b = temp; // move this loop's result into b
+
+      // and onto the next loop!
+    }
+
+  </script>
+</body>
+
+</html>

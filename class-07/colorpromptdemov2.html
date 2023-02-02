@@ -1,146 +1,6 @@
 <!DOCTYPE html>
 <html>
-<script>
 
-  function buttonPressed() {
-    var color = prompt("Please enter a hex color for the background:");
-
-    if (validateColor(color) == false) {
-      alert("Sorry, mate, that's not a legal hex color string.");
-    }
-    else {
-      console.log("selected hex color: #" + color);
-      var reverseColor = reverseHex(color);
-      console.log("inverse hex color: #" + reverseColor);
-
-      document.body.style.background = ("#" + color);
-      document.getElementById("bannertext").style.color = ("#" + reverseColor);
-    }
-
-  }
-
-  // is it a legal hex color string? returns true or false
-  function validateColor(hexString) {
-
-    // make sure it's a string of length 6
-    if (hexString == null || typeof (hexString) != 'string' || hexString.length != 6) {
-      return false;
-    }
-
-
-    // make sure each character is 0-9 or a-f
-    for (var x = 0; x < hexString.length; x++) {
-      var y = hexString[x];
-
-      if ((y >= '0' && y <= '9') || (y >= 'a' && y <= 'f') || (y >= 'A' && y <= 'F')) {
-        continue;
-      }
-      else {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-
-
-  /*
-    UNTESTED, unused
-    Allows you to select the Red, Green, or Blue segments of a hex color
-  */
-  function splitHexColor(hexString, rgb) {
-    switch (rgb) {
-      case 'r':
-      case 'R':
-        return hexString.substr(0, 2);
-        break;
-      case 'g':
-      case 'G':
-        return hexString.substr(2, 2);
-        break;
-      case 'b':
-      case 'B':
-        return hexString.substr(4, 2);
-        break;
-      default:
-        break;
-    }
-
-    return null;
-  }
-
-  function reverseHex(hexString) {
-    var output = '';
-
-    for (var x = 0; x < hexString.length; x++) {
-      var y = hexString[x];
-
-      switch (y) {
-        case '0':
-          output += 'f';
-          break;
-        case '1':
-          output += 'e';
-          break;
-        case '2':
-          output += 'd';
-          break;
-        case '3':
-          output += 'c';
-          break;
-        case '4':
-          output += 'b';
-          break;
-        case '5':
-          output += 'a';
-          break;
-        case '6':
-          output += '9';
-          break;
-        case '7':
-          output += '8';
-          break;
-        case '8':
-          output += '7';
-          break;
-        case '9':
-          output += '6';
-          break;
-        case 'a':
-        case 'A':
-          output += '5';
-          break;
-        case 'b':
-        case 'B':
-          output += '4';
-          break;
-        case 'c':
-        case 'C':
-          output += '3';
-          break;
-        case 'd':
-        case 'D':
-          output += '2';
-          break;
-        case 'e':
-        case 'E':
-          output += '1';
-          break;
-        case 'f':
-        case 'F':
-          output += '0';
-          break;
-        default:
-          break;
-      }
-    }
-
-    return output;
-  }
-
-
-</script>
 
 <head>
 
@@ -152,10 +12,114 @@
   <br>
   <br>
 
-  <marquee>
-    <h1 id="bannertext" style="color: white">here you go!</h1>
-  </marquee>
+  <div style="color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: xxx-large;
+    width: 100%;
+    filter: drop-shadow(1px 1px 0px white)">
 
+    <div style="justify-content: center;
+      width: 100%;">
+      <div style="display: flex;
+        flex-direction: row;">
+        #
+        <div id="redHex">00</div>
+        <div id="greenHex">00</div>
+        <div id="blueHex">00</div>
+      </div>
+  
+      <div id="bannertext">sampletext</div>
+    </div>
+    
+  
+  </div>
+
+
+
+  
+  <script>
+    const RED = 0, GREEN = 2, BLUE = 4;
+  
+    //console.log(Number.parseInt("fg", 16));
+    
+    function buttonPressed() {
+  
+      let hexString = prompt("Please enter a hex color for the background:");
+      
+      if (hexString != null) { // only do anything if not null, would be null if user presses cancel 
+  
+        const regex = /^#?[0-9a-fA-F]{6}$/; // regular expression to check whether it a string is in "hhhhhh" or "#hhhhhh" format.
+  
+        //console.log(regex.test(hexString));
+        if(regex.test(hexString) == true) { // if it's a valid input
+          if (hexString.length == 7) { // if it's 7 long it must start with a '#'
+            //console.log("length is 7"); //test
+            hexString = hexString.substr(1, 6); // slice off the initial '#'      
+          }
+        
+          let color = Number.parseInt(hexString, 16);
+  
+          let invColor = 0xFFFFFF - color;
+          let colorStr = "#" + toHexColorString(color);
+          let invColorStr = "#" + toHexColorString(invColor);
+    
+          console.log("selected hex color: " + colorStr);
+          console.log("inverse hex color: " + invColorStr);
+    
+          document.body.style.background = colorStr;
+          document.getElementById("bannertext").style.color = invColorStr;
+          updateTextColor("redHex", color, RED);
+          updateTextColor("greenHex", color, GREEN);
+          updateTextColor("blueHex", color, BLUE);
+          
+          
+        }
+        else {
+          alert("Sorry, that's not a legal hex color string. Please enter it in the hexidecimal color format of #RRGGBB.");
+        }
+      }
+    }
+    
+
+    function updateTextColor(elementName, color, rgb) {
+      document.getElementById(elementName).innerHTML = splitHexColor(toHexColorString(color), rgb).toUpperCase();
+      document.getElementById(elementName).style.color = "#" + toHexColorString(isolateColor(color, rgb));
+    }
+  
+    /**
+      Takes an integer color value and either RED, GREEN, or BLUE and returns an integer color value with only that color.  For example, isolateColor(0xAB3456, GREEN) would return 0x003400.
+    **/
+    function isolateColor(color, rgb) {
+      //console.log("bitmask:" + (0xFF0000 >> (rgb * 4)).toString(16)); //test
+      return color & (0xFF0000 >> (rgb * 4));
+    }
+    //console.log(isolateColor(0x123456, BLUE).toString(16)); //test
+  
+  
+    /*
+      Accepts a six character hexadecimal string and either RED, GREEN, or BLUE, and returns a substring containing only that color's octet.  For example, splitHexColor("AB3456", GREEN) will return "34".
+    */
+    function splitHexColor(hexString, rgb) {
+      console.log(typeof(hexString));
+      return hexString.substr(rgb, 2);
+    }
+  
+    
+    /**
+      Takes an integer color value and returns it as a six character hexadecimal string.  For example, toHexColorString(0x004500) would return a string containing "004500";
+    **/
+    function toHexColorString(color) {
+      return color.toString(16).padStart(6, '0');
+    }
+  
+    
+  
+  
+  
+  </script>
 
 </body>
 
