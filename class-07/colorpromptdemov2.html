@@ -6,12 +6,18 @@
 
 </head>
 
-<body>
-  <button onclick="buttonPressed()">Press to change background color</button>
+<body style="
+min-height: calc(100vh - 16px);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+font-family: Arial, Helvetica, sans-serif;
+font-size: xxx-large;
+">
+  <button onclick="buttonPressed()">Click to change background color</button>
 
-  <br>
-  <br>
-
+  <!-- 
   <div style="color: black;
     display: flex;
     flex-direction: column;
@@ -19,20 +25,19 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: xxx-large;
     width: 100%;
-    filter: drop-shadow(1px 1px 0px white)">
-
-    <div style="justify-content: center;
-      width: 100%;">
-      <div style="display: flex;
-        flex-direction: row;">
-        #
-        <div id="redHex">00</div>
-        <div id="greenHex">00</div>
-        <div id="blueHex">00</div>
-      </div>
-  
-      <div id="bannertext">sampletext</div>
+    filter: drop-shadow(1px 1px 0px white)"> -->
+    
+    <div id="hexColors" style="display: flex;
+      flex-direction: row;">
+      #
+      <span id="redHex">00</span>
+      <span id="greenHex">00</span>
+      <span id="blueHex">00</span>
     </div>
+
+    
+    <div id="bannertext">sampletext</div>
+    
     
   
   </div>
@@ -71,10 +76,11 @@
     
           document.body.style.background = colorStr;
           document.getElementById("bannertext").style.color = invColorStr;
+          document.getElementById("hexColors").style.color = invColorStr;
           updateTextColor("redHex", color, RED);
           updateTextColor("greenHex", color, GREEN);
           updateTextColor("blueHex", color, BLUE);
-          
+          document.getElementById("hexColors").style.textShadow = ("0px 0px 2px " + invColorStr);
           
         }
         else {
@@ -103,7 +109,7 @@
       Accepts a six character hexadecimal string and either RED, GREEN, or BLUE, and returns a substring containing only that color's octet.  For example, splitHexColor("AB3456", GREEN) will return "34".
     */
     function splitHexColor(hexString, rgb) {
-      console.log(typeof(hexString));
+      //console.log(typeof(hexString)); //test
       return hexString.substr(rgb, 2);
     }
   

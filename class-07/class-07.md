@@ -1,6 +1,13 @@
 # Class 07 Notes
 
+***
+### Contains:
 
+* **prompts.html** - Uses HTML and JavaScript to prompt the user for name, age, and location, and it will output different things based on the input.
+* **colorpromptdemo.html** - Using HTML and JS, the user can enter a hexadecimal value - the background will be set to that color, and the text on the page to the inverse (negated hexadecimal values).
+* **colorpromptdemov2.html** - The same as the above, but with improved code, using regex for string verification, and more demonstration of CSS styling.
+
+***
 
 > An **Event** is something that happens on a computer, whether it be human input or computer-driven.
 > 
