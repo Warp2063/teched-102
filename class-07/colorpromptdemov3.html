@@ -16,6 +16,7 @@ font-family: Arial, Helvetica, sans-serif;
 font-size: xxx-large;
 text-shadow: -1px -1px 1px white, 2px 2px 2px darkgray;
 ">
+  
   <button onclick="buttonPressed()">Click to change background color</button>
 
   <!-- 
@@ -28,36 +29,46 @@ text-shadow: -1px -1px 1px white, 2px 2px 2px darkgray;
     width: 100%;
     filter: drop-shadow(1px 1px 0px white)"> -->
     
-    <div id="hexColors" style="display: flex;
-      flex-direction: row;">
-      #
-      <span id="redHex">00</span>
-      <span id="greenHex">00</span>
-      <span id="blueHex">00</span>
-    </div>
+  <div id="hexColors" style="display: flex;
+    flex-direction: row;">
+    #
+    <span id="redHex">00</span>
+    <span id="greenHex">00</span>
+    <span id="blueHex">00</span>
+  </div>
 
     
-    <div id="bannertext">sampletext</div>
-    
-    
-  
+  <div id="decColors" style="display: flex;
+  flex-direction: row;">
+    rgb(
+    <span id="redDec">00</span>
+    ,
+    <span id="greenDec">00</span>
+    ,
+    <span id="blueDec">00</span>
+    )
   </div>
 
 
 
   
   <script>
-    const RED = 0, GREEN = 2, BLUE = 4;
-  
+    const RED = 0, GREEN = 1, BLUE = 2;
+    const regex = /^#?[0-9a-fA-F]{6}$/; // regular expression to check whether it a string is in "hhhhhh" or "#hhhhhh" format.
     //console.log(Number.parseInt("fg", 16));
     
+    /*
+    let testcolor = [255,0,255];
+    console.log("getcolor g: " + getColor(testcolor, GREEN));
+    console.log("gethexcolor g: " + getHexColor(testcolor, GREEN));
+    console.log("gethexcolorstring: " + getHexColorStr(testcolor));
+    */
+
     function buttonPressed() {
   
       let hexString = prompt("Please enter a hex color for the background:");
       
       if (hexString != null) { // only do anything if not null, would be null if user presses cancel 
-  
-        const regex = /^#?[0-9a-fA-F]{6}$/; // regular expression to check whether it a string is in "hhhhhh" or "#hhhhhh" format.
   
         //console.log(regex.test(hexString));
         if(regex.test(hexString) == true) { // if it's a valid input
@@ -92,6 +103,65 @@ text-shadow: -1px -1px 1px white, 2px 2px 2px darkgray;
       }
     }
     
+    
+
+    /**
+     * Accepts a string that's in the hexidecimal color format and updates the screen.  If it's not a valid color, does nothing.
+     */
+    function updateColor(hexColorStr) {
+      if (regex.test(hexColorStr) == true) {    // if it's a valid input
+        
+        if (hexColorStr.length == 7) {          // if it's 7 long it must start with a '#'
+          hexString = hexString.substr(1, 6);   // slice off the initial '#'
+        }
+
+        /*
+        let rgb = [], invrgb = [];
+        
+        // parses the values into an array
+        for(let i = 0 ; i < hexColorStr.length; i = i + 2) {
+          rgb.push(Number.parseInt(hexString.substr(i, 2), 16));
+          invrgb.push(0xFF - Number.parseInt(hexString.substr(i, 2)));
+        }
+        */
+
+        
+
+
+
+
+      }
+    
+    }
+
+    
+    function getColor(colorStr, rgb) {
+      return Number.parseInt(colorArray.substr(rgb * 2, 2), 16);
+    }
+
+    function getColor(colorArray, rgb) {
+        return colorArray[rgb];
+      }
+
+    function getHexColor(colorArray, rgb) {
+      //return colorArray[rgb].toString(16).toUpperCase();
+      return colorArray.substr(rgb * 2, 2).toUpperCase();
+    }
+
+    function getHexColorStr(colorArray) {
+      //return '#' + ((colorArray[RED] << 16) + (colorArray[GREEN] << 8) + colorArray[BLUE]).toString(16).padStart(6, '0').toUpperCase();
+      return '#' + colorArray
+    }
+
+    /**
+     * Note: this sleep function is a terrible idea.
+    */
+    function sleep(milliseconds) {
+      var currentTime = new Date().getTime();
+
+      while (currentTime + milliseconds >= new Date().getTime()) {
+      }
+    }
 
     function updateTextColor(elementName, color, rgb) {
       document.getElementById(elementName).innerHTML = splitHexColor(toHexColorString(color), rgb).toUpperCase();
